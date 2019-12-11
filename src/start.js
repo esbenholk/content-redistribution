@@ -1,13 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import FifthDimension from "./fifthdimension";
 
-ReactDOM.render(
-    <HelloWorld />,
-    document.querySelector('main')
-);
+let element = <FifthDimension />;
 
-function HelloWorld() {
-    return (
-        <div>Hello, World!</div>
-    );
-}
+ReactDOM.render(element, document.querySelector("main"));

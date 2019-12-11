@@ -42,6 +42,7 @@
         "redux-promise": "^0.5.3",
         "socket.io": "^2.2.0",
         "spiced-pg": "^1.0.0",
+        "three": "^0.111.0",
         "uglifyjs-webpack-plugin": "^2.1.2",
         "uid-safe": "^2.1.4",
         "webpack": "^4.29.6",

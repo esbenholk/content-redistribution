@@ -1,0 +1,25 @@
+/* animations */
+@keyframes gradientAnimator {
+    0% {
+        background-position: 34% 0%;
+    }
+    50% {
+        background-position: 67% 100%;
+    }
+    100% {
+        background-position: 34% 0%;
+    }
+}
+
+/* main */
+body {
+    box-sizing: border-box;
+    margin: 0;
+    background: linear-gradient(153deg, #c100ff, #fdc1ff, #00ffc4, #e7ff00);
+    background-size: 400% 400%;
+    animation: gradientAnimator 40s ease infinite;
+}
+
+h1 {
+    color: blue;
+}
