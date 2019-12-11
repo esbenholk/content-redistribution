@@ -23,3 +23,25 @@ body {
 h1 {
     color: blue;
 }
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -9999999;
+}
+.focusSquare {
+}
+.uploaderfunctions {
+    z-index: 0;
+}
+#invisible_game_starter {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 20px;
+    border: 2px red solid;
+    background: red;
+}

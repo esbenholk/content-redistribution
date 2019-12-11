@@ -6,17 +6,17 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 ////variable scene componenets
 
 console.log("santity check");
-var camera, scene, renderer, controls;
-var raycaster;
-var moveForward = false;
-var moveBackward = false;
-var moveLeft = false;
-var moveRight = false;
-var canJump = false;
-var prevTime = performance.now();
-var velocity = new THREE.Vector3();
-var direction = new THREE.Vector3();
-let maincanvas = document.getElementById("main_dimension");
+let camera, scene, renderer, controls;
+let raycaster;
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
+let canJump = false;
+let prevTime = performance.now();
+let velocity = new THREE.Vector3();
+let direction = new THREE.Vector3();
+const gamestarter = document.getElementById("invisible_game_starter");
 
 export default class FifthDimension extends Component {
     constructor(props) {
@@ -28,16 +28,16 @@ export default class FifthDimension extends Component {
     componentDidMount() {
         this.init();
         this.animate();
-        document.addEventListener(
-            "click",
-            function() {
-                controls.lock();
-            },
-            false
-        ); ///activates mouse focus control
+        gamestarter.onClick = function() {
+            console.log("game starterclicked");
+        };
+        // document.addEventListener("click", function() {
+        //     controls.lock();
+        // });
         document.addEventListener("keydown", this.onKeyDown);
         document.addEventListener("keyup", this.onKeyUp);
     }
+
     onKeyUp(event) {
         switch (event.keyCode) {
             case 38: // up
@@ -186,13 +186,16 @@ export default class FifthDimension extends Component {
             prevTime = time;
         }
         createControls();
-
         renderer.render(scene, camera);
     }
+
     render() {
         return (
             <div>
-                <h1> another headline </h1>
+                <button className="start" onClick={this.start}>
+                    {" "}
+                    start{" "}
+                </button>
             </div>
         );
     }
