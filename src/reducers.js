@@ -7,6 +7,5 @@ export default function(state = {}, action) {
             image: action.image
         };
     }
-
     return state;
 }

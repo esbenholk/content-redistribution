@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import { socket } from "./sockets";
@@ -19,35 +19,24 @@ let velocity = new THREE.Vector3();
 let direction = new THREE.Vector3();
 let start = true;
 
-export default class FifthDimension extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-        this.animate = this.animate.bind(this);
-        this.onWindowResize = this.onWindowResize.bind(this);
-    }
-    componentDidMount() {
-        // const images = useSelector(state => {
-        //     return state && state.images;
-        // });
-        console.log(
-            "images arrived in fifthdimension component from state",
-            images
-        );
-        this.init();
-        this.animate();
+export default function FifthDimension(props) {
+    const images = useSelector(state => {
+        console.log("in fifth dimension", state.image);
+        return state && state.image;
+    });
 
+    useEffect(() => {
         if (start) {
             document.addEventListener("click", function() {
                 controls.lock();
             });
         }
 
-        document.addEventListener("keydown", this.onKeyDown);
-        document.addEventListener("keyup", this.onKeyUp);
-    }
+        document.addEventListener("keydown", onKeyDown);
+        document.addEventListener("keyup", onKeyUp);
+    }, []);
 
-    onKeyUp(event) {
+    const onKeyUp = event => {
         switch (event.keyCode) {
             case 38: // up
             case 87: // w
@@ -66,8 +55,8 @@ export default class FifthDimension extends Component {
                 moveRight = false;
                 break;
         }
-    }
-    onKeyDown(event) {
+    };
+    const onKeyDown = event => {
         switch (event.keyCode) {
             case 38: // up
             case 87: // w
@@ -90,8 +79,9 @@ export default class FifthDimension extends Component {
                 canJump = false;
                 break;
         }
-    }
-    init() {
+    };
+
+    const init = () => {
         //set up textureloader for url texture placement
         const textureLoader = new THREE.TextureLoader();
         textureLoader.crossOrigin = "Anonymous";
@@ -121,8 +111,9 @@ export default class FifthDimension extends Component {
             ground.rotateX(-Math.PI / 2);
 
             let groundImage = textureLoader.load(
-                "https://images.unsplash.com/photo-1502759683299-cdcd6974244f?auto=format&fit=crop&w=440&h=220&q=60"
+                "https://66.media.tumblr.com/b265c4dcf76d0ac0eca5eb914f663b78/tumblr_p5i9u7cVAz1x4yo1vo1_400.png"
             );
+
             let groundMaterial = new THREE.MeshBasicMaterial({
                 map: groundImage
             });
@@ -133,10 +124,10 @@ export default class FifthDimension extends Component {
 
         // objects
         var boxGeometry = new THREE.BoxGeometry(20, 20, 20);
-        let boxImage = textureLoader.load(
-            "https://images.unsplash.com/photo-1502759683299-cdcd6974244f?auto=format&fit=crop&w=440&h=220&q=60"
-        );
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < images.images.length; i++) {
+            console.log("approved image in loop", images.images[i]);
+            let boxImage;
+            boxImage = textureLoader.load(images.images[i].url);
             let boxMaterial = new THREE.MeshBasicMaterial({
                 flatShading: true,
                 map: boxImage
@@ -157,15 +148,15 @@ export default class FifthDimension extends Component {
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
         //
-        window.addEventListener("resize", this.onWindowResize, false);
-    }
-    onWindowResize() {
+        window.addEventListener("resize", onWindowResize, false);
+    };
+    const onWindowResize = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    animate() {
-        requestAnimationFrame(this.animate);
+    };
+    const animate = () => {
+        requestAnimationFrame(animate);
 
         // raycaster.ray.origin.copy(controls.getObject().position);
         // raycaster.ray.origin.y -= 10;
@@ -196,9 +187,12 @@ export default class FifthDimension extends Component {
         }
         createControls();
         renderer.render(scene, camera);
+    };
+
+    if (images) {
+        init();
+        animate();
     }
 
-    render() {
-        return <div></div>;
-    }
+    return <div></div>;
 }

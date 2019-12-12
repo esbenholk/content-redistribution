@@ -9,7 +9,6 @@ export const init = store => {
         socket = io.connect();
 
         socket.on("images_for_5thdimension", imageArray => {
-            console.log("socket receives image array:", imageArray);
             store.dispatch(newImage(imageArray));
         });
     }

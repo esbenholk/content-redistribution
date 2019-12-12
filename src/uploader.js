@@ -13,6 +13,7 @@ export default class Uploader extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.uploadimageurl = this.uploadimageurl.bind(this);
     }
+
     componentDidMount() {}
     handleChange(e) {
         console.log("file", e.target.files[0]);
