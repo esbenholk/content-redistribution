@@ -26,16 +26,62 @@ export default class Uploader extends React.Component {
     }
     uploadimageurl() {
         let testString = this.state.imageurl;
-        console.log("imageurl", this.state.imageurl);
-        if (testString.includes("http")) {
-            axios
-                .post("/uploadimageurl", { imageurl: this.state.imageurl })
-                .then(rdata => {
-                    console.log("return from server to uploader", rdata);
-                });
-            this.setState({
-                message_to_uploader: "u r cute"
+        let checkCORSpolicy = function(image) {
+            console.log(image);
+            return new Promise(function(resolve, reject) {
+                const createCORSRequest = function(method, url) {
+                    var xhr = new XMLHttpRequest();
+                    if ("withCredentials" in xhr) {
+                        // Most browsers.
+                        xhr.open(method, url, true);
+                    } else if (typeof XDomainRequest != "undefined") {
+                        // IE8 & IE9
+                        xhr = new XDomainRequest();
+                        xhr.open(method, url);
+                    } else {
+                        // CORS not supported.
+                        xhr = null;
+                    }
+                    return xhr;
+                };
+                var xhr = createCORSRequest("GET", image);
+
+                xhr.onload = function() {
+                    resolve(true);
+                };
+                xhr.onerror = function() {
+                    reject(new Error());
+                };
+                xhr.send();
             });
+        };
+
+        if (testString.includes("http")) {
+            checkCORSpolicy(this.state.imageurl)
+                .then(answer => {
+                    console.log(answer);
+                    if (answer == true) {
+                        console.log("the url is valid");
+                        axios
+                            .post("/uploadimageurl", {
+                                imageurl: this.state.imageurl
+                            })
+                            .then(rdata => {
+                                console.log(
+                                    "return from server to uploader",
+                                    rdata
+                                );
+                            });
+                        this.setState({
+                            message_to_uploader: "u r cute"
+                        });
+                    }
+                })
+                .catch(() => {
+                    this.setState({
+                        message_to_uploader: "nope nope nope"
+                    });
+                });
         } else {
             this.setState({
                 message_to_uploader: "u have to use a real http addres babe"
@@ -68,6 +114,9 @@ export default class Uploader extends React.Component {
                     error: true
                 });
             });
+    }
+    sendError() {
+        console.log("no no no no cors");
     }
     render() {
         return (
