@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { socket } from "./sockets";
+import { useSelector } from "react-redux";
 
 ////variable scene componenets
 
@@ -16,7 +17,7 @@ let canJump = false;
 let prevTime = performance.now();
 let velocity = new THREE.Vector3();
 let direction = new THREE.Vector3();
-const gamestarter = document.getElementById("invisible_game_starter");
+let start = true;
 
 export default class FifthDimension extends Component {
     constructor(props) {
@@ -26,14 +27,22 @@ export default class FifthDimension extends Component {
         this.onWindowResize = this.onWindowResize.bind(this);
     }
     componentDidMount() {
+        // const images = useSelector(state => {
+        //     return state && state.images;
+        // });
+        console.log(
+            "images arrived in fifthdimension component from state",
+            images
+        );
         this.init();
         this.animate();
-        gamestarter.onClick = function() {
-            console.log("game starterclicked");
-        };
-        // document.addEventListener("click", function() {
-        //     controls.lock();
-        // });
+
+        if (start) {
+            document.addEventListener("click", function() {
+                controls.lock();
+            });
+        }
+
         document.addEventListener("keydown", this.onKeyDown);
         document.addEventListener("keyup", this.onKeyUp);
     }
@@ -190,18 +199,6 @@ export default class FifthDimension extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <button className="start" onClick={this.start}>
-                    {" "}
-                    start{" "}
-                </button>
-            </div>
-        );
+        return <div></div>;
     }
 }
-
-// style={{ width: "400px", height: "400px" }}
-// ref={mount => {
-//     this.mount = mount;
-// }}
