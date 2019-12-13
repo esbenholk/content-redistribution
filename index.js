@@ -54,6 +54,9 @@ app.post("/uploadfile", uploader.single("file"), s3.upload, (req, res) => {
         .upload(imageURL)
         .then(result => {
             console.log("file put into database", result);
+            io.sockets.emit("new_imagefile_added", {
+                image: result.rows[0]
+            });
         })
         .catch(console.log("error: can not put file in database"));
 });

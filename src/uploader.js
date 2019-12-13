@@ -79,7 +79,8 @@ export default class Uploader extends React.Component {
                 })
                 .catch(() => {
                     this.setState({
-                        message_to_uploader: "nope nope nope"
+                        message_to_uploader:
+                            "nope nope nope! the original domain for this image wont fit with our build! try another!"
                     });
                 });
         } else {
@@ -111,7 +112,9 @@ export default class Uploader extends React.Component {
             .catch(err => {
                 console.log("upload image didnt work", err);
                 this.setState({
-                    error: true
+                    error: true,
+                    message_to_uploader:
+                        "Didnt work! the file is probably a bit too big honey! try a smaller file!"
                 });
             });
     }

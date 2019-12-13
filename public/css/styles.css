@@ -15,8 +15,15 @@
 body {
     box-sizing: border-box;
     margin: 0;
-    background: linear-gradient(153deg, #c100ff, #fdc1ff, #00ffc4, #e7ff00);
-    background-size: 400% 400%;
+    background: linear-gradient(
+        180deg,
+        #00fffd,
+        #00ff1b,
+        #fff500,
+        #f390ff,
+        #00ffe6
+    );
+    background-size: 1000% 1000%;
     animation: gradientAnimator 40s ease infinite;
 }
 

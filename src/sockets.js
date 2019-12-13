@@ -1,6 +1,6 @@
 import * as io from "socket.io-client";
 
-import { newImage } from "./actions";
+import { images, newImage } from "./actions";
 
 export let socket;
 
@@ -9,7 +9,12 @@ export const init = store => {
         socket = io.connect();
 
         socket.on("images_for_5thdimension", imageArray => {
-            store.dispatch(newImage(imageArray));
+            store.dispatch(images(imageArray));
+        });
+
+        socket.on("new_imagefile_added", imageForImageArray => {
+            console.log("imageForImageArray", imageForImageArray);
+            store.dispatch(newImage(imageForImageArray.image));
         });
     }
 };

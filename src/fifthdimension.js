@@ -21,7 +21,7 @@ let start = true;
 
 export default function FifthDimension(props) {
     const images = useSelector(state => {
-        console.log("in fifth dimension", state.image);
+        console.log("in redux state: state.image", state.image);
         return state && state.image;
     });
 
@@ -93,7 +93,7 @@ export default function FifthDimension(props) {
         );
         camera.position.y = 40;
         scene = new THREE.Scene();
-        scene.fog = new THREE.Fog(0xff7ffc, 100, 500);
+        // scene.fog = new THREE.Fog(0xff7ffc, 30, 70);
         var light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
         light.position.set(0.5, 1, 0.75);
         scene.add(light);
@@ -123,9 +123,8 @@ export default function FifthDimension(props) {
         createfloor();
 
         // objects
-        var boxGeometry = new THREE.BoxGeometry(20, 20, 20);
+        var boxGeometry = new THREE.BoxGeometry(50, 50, 50);
         for (let i = 0; i < images.images.length; i++) {
-            console.log("approved image in loop", images.images[i]);
             let boxImage;
             boxImage = textureLoader.load(images.images[i].url);
             let boxMaterial = new THREE.MeshBasicMaterial({

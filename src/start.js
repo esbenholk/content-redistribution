@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./app";
-import Uploader from "./uploader";
-import FifthDimension from "./fifthdimension";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxPromise from "redux-promise";
