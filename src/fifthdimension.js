@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as THREE from "three";
+import { Canvas, useRender } from "react-three-fiber";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import { socket } from "./sockets";
 import { useSelector } from "react-redux";
@@ -193,5 +194,9 @@ export default function FifthDimension(props) {
         animate();
     }
 
-    return <div></div>;
+    return (
+        <div>
+            <Canvas> </Canvas>
+        </div>
+    );
 }
