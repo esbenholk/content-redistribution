@@ -1,19 +1,18 @@
 import React from "react";
-import axios from "./axios";
 import Uploader from "./uploader";
 import FifthDimension from "./fifthdimension";
+import { useSelector } from "react-redux";
 
-export default class App extends React.Component {
-    constructor(props) {
-        super();
-    }
-
-    render() {
-        return (
-            <div>
-                <FifthDimension />
-                <Uploader upload={this.upload} />
-            </div>
-        );
-    }
+export default function App() {
+    const images = useSelector(state => {
+        console.log("in redux state: state.image", state.image);
+        return state && state.image;
+    });
+    console.log("in app", images);
+    return (
+        <div>
+            <FifthDimension images={images} />
+            <Uploader />
+        </div>
+    );
 }

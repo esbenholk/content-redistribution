@@ -98,11 +98,9 @@ export default class Uploader extends React.Component {
             .then(({ data }) => {
                 if (data.success) {
                     console.log("data", data);
-                    // this.setState({
-                    //     image: data.image,
-                    //     uploaderIsVisible: !this.state.uploaderIsVisible,
-                    //     cubeImage: data.image
-                    // });
+                    this.setState({
+                        message_to_uploader: "u r cute"
+                    });
                 } else {
                     this.setState({
                         error: true

@@ -1,7 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./app";
-// import Uploader from "./uploader"; <Uploader />
+import { Canvas } from "react-three-fiber";
+import FifthDimension from "./fifthdimensionfiber";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxPromise from "redux-promise";
@@ -18,8 +17,19 @@ const store = createStore(
 init(store);
 let element = (
     <Provider store={store}>
-        <App />
+        <FifthDimension />
     </Provider>
 );
 
-ReactDOM.render(element, document.querySelector("main"));
+export default class App extends React.Component {
+    constructor(props) {
+        super();
+    }
+    render() {
+        return (
+            <Canvas>
+                <element />
+            </Canvas>
+        );
+    }
+}

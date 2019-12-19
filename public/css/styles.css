@@ -1,3 +1,13 @@
+body,
+html,
+canvas,
+main {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 /* animations */
 @keyframes gradientAnimator {
     0% {
@@ -10,7 +20,9 @@
         background-position: 34% 0%;
     }
 }
-
+#root {
+    height: 100%;
+}
 /* main */
 body {
     box-sizing: border-box;
@@ -27,12 +39,8 @@ body {
     animation: gradientAnimator 40s ease infinite;
 }
 
-h1 {
-    color: blue;
-}
-
 canvas {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -60,4 +68,20 @@ canvas {
 
 #uploaderfunctionality:hover {
     background: rgba(0, 0, 0, 0.5);
+}
+
+.drunktoggle button {
+    margin-top: 0px;
+    background: linear-gradient(153deg, #c100ff, #00ffc4, #e7ff00, #fdc1ff);
+    background-size: 400% 400%;
+    animation: gradientAnimator 40s ease infinite;
+    border: none;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: white;
+    font-family: "Bebas Neue", cursive;
+    font-size: 20px;
 }

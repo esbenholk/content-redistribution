@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useRender } from "react-three-fiber";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
-import { socket } from "./sockets";
-import { useSelector } from "react-redux";
-
-////variable scene componenets
-
-console.log("santity check");
+import Drunktoggle from "./drunktoggle";
 let camera, scene, renderer, controls;
-let raycaster;
+
 let moveForward = false;
 let moveBackward = false;
 let moveLeft = false;
@@ -19,12 +14,11 @@ let prevTime = performance.now();
 let velocity = new THREE.Vector3();
 let direction = new THREE.Vector3();
 let start = true;
-
+let newscale = true;
+let drunk = false;
+let boxes = [];
 export default function FifthDimension(props) {
-    const images = useSelector(state => {
-        console.log("in redux state: state.image", state.image);
-        return state && state.image;
-    });
+    const images = props.images;
 
     useEffect(() => {
         if (start) {
@@ -32,10 +26,21 @@ export default function FifthDimension(props) {
                 controls.lock();
             });
         }
-
         document.addEventListener("keydown", onKeyDown);
         document.addEventListener("keyup", onKeyUp);
     }, []);
+
+    useEffect(() => {
+        const canvases = document.getElementsByTagName("canvas");
+        console.log("canvases", canvases);
+
+        if (canvases.length > 1) {
+            for (var i = 0; i < canvases.length; i++) {
+                canvases[0].parentNode.removeChild(canvases[0]);
+            }
+            //
+        }
+    }, [images]);
 
     const onKeyUp = event => {
         switch (event.keyCode) {
@@ -81,7 +86,7 @@ export default function FifthDimension(props) {
                 break;
         }
     };
-
+    const canvasReference = useRef();
     const init = () => {
         //set up textureloader for url texture placement
         const textureLoader = new THREE.TextureLoader();
@@ -94,36 +99,49 @@ export default function FifthDimension(props) {
         );
         camera.position.y = 40;
         scene = new THREE.Scene();
-        // scene.fog = new THREE.Fog(0xff7ffc, 30, 70);
-        var light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
+        scene.fog = new THREE.Fog(0xff7ffc, 100, 200);
+        let light = new THREE.HemisphereLight(0xeeeeff, 0x16f9e8, 0.75);
         light.position.set(0.5, 1, 0.75);
         scene.add(light);
+
         controls = new PointerLockControls(camera, document.body);
         scene.add(controls.getObject());
 
-        // raycaster = new THREE.Raycaster(
-        //     new THREE.Vector3(),
-        //     new THREE.Vector3(0, -1, 0),
-        //     0,
-        //     10
-        // );
-        function createfloor() {
-            let ground = new THREE.PlaneGeometry(2000, 2000, 100, 100);
-            ground.rotateX(-Math.PI / 2);
+        renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
-            let groundImage = textureLoader.load(
-                "https://66.media.tumblr.com/b265c4dcf76d0ac0eca5eb914f663b78/tumblr_p5i9u7cVAz1x4yo1vo1_400.png"
-            );
+        //Create a PointLight and turn on shadows for the light
+        var pointlight = new THREE.PointLight(0xffffff, 1, 100);
+        pointlight.position.set(0, 10, 0);
+        pointlight.castShadow = true;
+        pointlight.shadow.mapSize.width = 512; // default
+        pointlight.shadow.mapSize.height = 512; // default
+        pointlight.shadow.camera.near = 0.5; // default
+        pointlight.shadow.camera.far = 500; // default false
+        scene.add(pointlight);
 
-            let groundMaterial = new THREE.MeshBasicMaterial({
-                map: groundImage
-            });
-            var floor = new THREE.Mesh(ground, groundMaterial);
-            scene.add(floor);
-        }
-        createfloor();
+        let ground = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+        ground.rotateX(-Math.PI / 2);
+
+        let groundImage = textureLoader.load(
+            "https://66.media.tumblr.com/b265c4dcf76d0ac0eca5eb914f663b78/tumblr_p5i9u7cVAz1x4yo1vo1_400.png"
+        );
+
+        let groundMaterial = new THREE.MeshBasicMaterial({
+            map: groundImage
+        });
+        var floor = new THREE.Mesh(ground, groundMaterial);
+        floor.receiveShadow = true;
+        scene.add(floor);
 
         // objects
+
         var boxGeometry = new THREE.BoxGeometry(50, 50, 50);
         for (let i = 0; i < images.images.length; i++) {
             let boxImage;
@@ -132,23 +150,43 @@ export default function FifthDimension(props) {
                 flatShading: true,
                 map: boxImage
             });
-            var box = new THREE.Mesh(boxGeometry, boxMaterial);
-            box.position.x = Math.floor(Math.random() * 20 - 10) * 10;
-            box.position.y = Math.floor(Math.random() * 20);
-            box.position.z = Math.floor(Math.random() * 20 - 10) * 10;
+            let box = new THREE.Mesh(boxGeometry, boxMaterial);
+            box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
+            // box.position.y = Math.floor(Math.random() * 20) * 2;
+            box.position.y = 20;
+            box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+            box.castShadow = true;
+            boxes.push(box);
             scene.add(box);
         }
         //
 
-        renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true
-        });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-        //
+        canvasReference.current.appendChild(renderer.domElement);
         window.addEventListener("resize", onWindowResize, false);
+    };
+    const replace = () => {
+        console.log("new scale", newscale);
+        if (newscale == true) {
+            scene.fog = new THREE.Fog(0x261332, 100, 200);
+            for (let i = 0; i < boxes.length; i++) {
+                boxes[i].position.y = Math.floor(Math.random() * 20 - 10) * 30;
+                boxes[i].position.x = Math.floor(Math.random() * 20 - 10) * 20;
+                boxes[i].position.z = Math.floor(Math.random() * 20 - 10) * 30;
+                boxes[i].scale.set(2, 2, 2);
+            }
+            newscale = false;
+        } else {
+            scene.fog = new THREE.Fog(0xff7ffc, 100, 200);
+            for (let i = 0; i < boxes.length; i++) {
+                boxes[i].position.x = Math.floor(Math.random() * 20 - 10) * 20;
+                boxes[i].position.y = 20;
+                boxes[i].position.z = Math.floor(Math.random() * 20 - 10) * 20;
+                boxes[i].scale.set(1, 1, 1);
+                boxes[i].rotation.y = 0;
+                boxes[i].rotation.x = 0;
+            }
+            newscale = true;
+        }
     };
     const onWindowResize = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -157,6 +195,13 @@ export default function FifthDimension(props) {
     };
     const animate = () => {
         requestAnimationFrame(animate);
+
+        if (drunk == true) {
+            for (var i = 0; i < boxes.length; i++) {
+                boxes[i].rotation.y += 0.002;
+                boxes[i].rotation.x += 0.002;
+            }
+        }
 
         // raycaster.ray.origin.copy(controls.getObject().position);
         // raycaster.ray.origin.y -= 10;
@@ -189,14 +234,22 @@ export default function FifthDimension(props) {
         renderer.render(scene, camera);
     };
 
-    if (images) {
+    if (props.images) {
         init();
         animate();
     }
+    const drunkAnimation = () => {
+        if (drunk == false) {
+            drunk = true;
+        } else {
+            drunk = false;
+        }
+    };
 
     return (
         <div>
-            <Canvas> </Canvas>
+            <div className="canvasreference" ref={canvasReference}></div>
+            <Drunktoggle replace={replace} drunkAnimation={drunkAnimation} />
         </div>
     );
 }

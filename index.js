@@ -57,6 +57,7 @@ app.post("/uploadfile", uploader.single("file"), s3.upload, (req, res) => {
             io.sockets.emit("new_imagefile_added", {
                 image: result.rows[0]
             });
+            res.redirect("/");
         })
         .catch(console.log("error: can not put file in database"));
 });
@@ -66,6 +67,7 @@ app.post("/uploadimageurl", (req, res) => {
         .upload(req.body.imageurl)
         .then(result => {
             console.log("url put into database", result);
+            res.redirect("/");
         })
         .catch(console.log("error: can not put url in database"));
 });
