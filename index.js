@@ -54,6 +54,7 @@ const uploader = multer({
 });
 
 app.post("/uploadfile", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("uploading file");
     const imageURL = `${s3Url}/${req.file.filename}`;
     databaseActions
         .upload(imageURL)
@@ -106,7 +107,7 @@ io.on("connection", function(socket) {
         .getImages()
         .then(result => {
             console.log("have images on server");
-            io.emit("images_for_5thdimension", {
+            io.sockets.emit("images_for_5thdimension", {
                 images: result.rows
             });
         })

@@ -237,7 +237,6 @@ export default function FifthDimension(props) {
         renderer.render(scene, camera);
     };
     if (props.images) {
-        console.log("if sentence about images entered");
         init();
         animate();
     }

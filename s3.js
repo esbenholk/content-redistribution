@@ -18,7 +18,7 @@ exports.upload = function(req, res, next) {
         console.log("there is no req.file");
         return res.sendStatus(500);
     }
-
+    console.log("attempting to upload", req.file);
     const { filename, mimetype, size, path } = req.file;
     s3.putObject({
         Bucket: "houseofkillingimageboard",
