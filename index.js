@@ -105,6 +105,7 @@ io.on("connection", function(socket) {
     databaseActions
         .getImages()
         .then(result => {
+            console.log("have images on server");
             io.emit("images_for_5thdimension", {
                 images: result.rows
             });
