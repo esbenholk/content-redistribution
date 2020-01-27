@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Canvas, useRender } from "react-three-fiber";
+
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import Drunktoggle from "./drunktoggle";
-let camera, scene, renderer, controls;
+var camera, scene, renderer, controls;
 
 let moveForward = false;
 let moveBackward = false;
@@ -20,7 +20,7 @@ let boxes = [];
 
 export default function FifthDimension(props) {
     const images = props.images;
-    console.log("logging imaes", images);
+    console.log("logging images", images);
     useEffect(() => {
         if (start) {
             document.addEventListener("click", function() {
@@ -90,6 +90,7 @@ export default function FifthDimension(props) {
     };
     const canvasReference = useRef();
     const init = () => {
+        console.log("init initilized");
         //set up textureloader for url texture placement
         const textureLoader = new THREE.TextureLoader();
         textureLoader.crossOrigin = "Anonymous";
@@ -236,6 +237,7 @@ export default function FifthDimension(props) {
         renderer.render(scene, camera);
     };
     if (props.images) {
+        console.log("if sentence about images entered");
         init();
         animate();
     }
