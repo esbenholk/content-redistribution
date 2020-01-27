@@ -88,13 +88,12 @@ server.listen(PORT, function() {
 
 io.on("connection", function() {
     console.log("created socket connection");
-    databaseActions
-        .getImages()
-        .then(result => {
-            console.log("have images from database", result.rows);
-            io.sockets.emit("images_for_5thdimension", {
+    databaseActions.getImages().then(result => {
+        console.log("have images from database", result.rows);
+        io.sockets
+            .emit("images_for_5thdimension", {
                 images: result.rows
-            });
-        })
-        .catch("error: unable to get imageurls from database");
+            })
+            .catch("error: unable to get imageurls from database");
+    });
 });
