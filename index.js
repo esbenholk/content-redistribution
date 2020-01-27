@@ -1,3 +1,4 @@
+const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
 const compression = require("compression");
@@ -76,7 +77,7 @@ app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-server.listen(8080, function() {
+server.listen(PORT, function() {
     console.log("I'm listening.");
 });
 
