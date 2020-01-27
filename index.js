@@ -13,7 +13,8 @@ const server = require("http").Server(app);
 // const io = require("socket.io")(server, {
 //     origins: "https://contentredistribution.herokuapp.com/"
 // });
-const io = require("socket.io")(server);
+const socket = require("socket.io");
+const io = socket(server);
 
 app.use(compression());
 app.use(express.static("./public"));
