@@ -12,7 +12,7 @@ const s3 = require("./s3");
 const { s3Url } = require("./config.json");
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
-    origins: "https://contentredistribution.herokuapp.com/"
+    origins: "contentredistribution.herokuapp.com"
 });
 
 app.use(compression());
