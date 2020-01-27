@@ -9,6 +9,7 @@ export default function App() {
         return state && state.image;
     });
     console.log("in app", images);
+    console.log("check");
     return (
         <div>
             <FifthDimension images={images} />
