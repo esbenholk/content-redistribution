@@ -20,16 +20,12 @@ let boxes = [];
 
 export default function FifthDimension(props) {
     const images = props.images;
-
+    console.log("logging imaes", images);
     useEffect(() => {
-        if (props.images) {
-            init();
-            animate();
-            if (start) {
-                document.addEventListener("click", function() {
-                    controls.lock();
-                });
-            }
+        if (start) {
+            document.addEventListener("click", function() {
+                controls.lock();
+            });
         }
         document.addEventListener("keydown", onKeyDown);
         document.addEventListener("keyup", onKeyUp);
@@ -239,7 +235,10 @@ export default function FifthDimension(props) {
         createControls();
         renderer.render(scene, camera);
     };
-
+    if (props.images) {
+        init();
+        animate();
+    }
     const drunkAnimation = () => {
         if (drunk == false) {
             drunk = true;
