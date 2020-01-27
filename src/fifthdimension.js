@@ -35,9 +35,10 @@ export default function FifthDimension(props) {
         console.log("canvases", canvases);
 
         if (canvases.length > 1) {
-            for (var i = 0; i < canvases.length; i++) {
-                canvases[0].parentNode.removeChild(canvases[0]);
-            }
+            canvases[0].parentNode.removeChild(canvases[0]);
+            // for (var i = 0; i < canvases.length; i++) {
+            //
+            // }
             //
         }
     }, [images]);
