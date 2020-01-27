@@ -11,9 +11,10 @@ const path = require("path");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
 const server = require("http").Server(app);
-const io = require("socket.io")(server, {
-    origins: "contentredistribution.herokuapp.com"
-});
+// const io = require("socket.io")(server, {
+//     origins: "contentredistribution.herokuapp.com"
+// });
+const io = require("socket.io")(server);
 
 app.use(compression());
 app.use(express.static("./public"));
