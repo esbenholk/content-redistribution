@@ -88,8 +88,20 @@ process.on("uncaughtException", function(err) {
     console.log(err);
 });
 
-io.on("connection", function() {
-    console.log("created socket connection");
+// io.on("connection", function() {
+//     console.log("created socket connection");
+//     databaseActions
+//         .getImages()
+//         .then(result => {
+//             io.sockets.emit("images_for_5thdimension", {
+//                 images: result.rows
+//             });
+//         })
+//         .catch("error: unable to get imageurls from database");
+// });
+
+io.on("connection", function(socket) {
+    console.log("Client connected");
     databaseActions
         .getImages()
         .then(result => {
@@ -98,4 +110,5 @@ io.on("connection", function() {
             });
         })
         .catch("error: unable to get imageurls from database");
+    socket.on("disconnect", () => console.log("Client disconnected"));
 });
