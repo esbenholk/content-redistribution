@@ -1,6 +1,4 @@
 const PORT = process.env.PORT || 8080;
-// const PORT2 =
-//     "https://contentredistribution.herokuapp.com/" || "localhost:8080";
 const express = require("express");
 const app = express();
 const compression = require("compression");
@@ -82,18 +80,23 @@ app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
+process.on("uncaughtException", function(err) {
+    console.log(err);
+});
+
 server.listen(PORT, function() {
     console.log("I'm listening.");
 });
 
 io.on("connection", function() {
     console.log("created socket connection");
-    databaseActions.getImages().then(result => {
-        console.log("have images from database", result.rows);
-        io.sockets
-            .emit("images_for_5thdimension", {
+    databaseActions
+        .getImages()
+        .then(result => {
+            console.log("have images from database", result.rows);
+            io.sockets.emit("images_for_5thdimension", {
                 images: result.rows
-            })
-            .catch("error: unable to get imageurls from database");
-    });
+            });
+        })
+        .catch("error: unable to get imageurls from database");
 });
