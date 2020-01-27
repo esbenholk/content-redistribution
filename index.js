@@ -9,10 +9,9 @@ const path = require("path");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
 const server = require("http").Server(app);
-// const io = require("socket.io")(server, {
-//     origins: "contentredistribution.herokuapp.com"
-// });
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+    origins: "https://contentredistribution.herokuapp.com/"
+});
 
 app.use(compression());
 app.use(express.static("./public"));
@@ -80,12 +79,12 @@ app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-process.on("uncaughtException", function(err) {
-    console.log(err);
-});
-
 server.listen(PORT, function() {
     console.log("I'm listening.");
+});
+
+process.on("uncaughtException", function(err) {
+    console.log(err);
 });
 
 io.on("connection", function() {
