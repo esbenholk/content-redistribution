@@ -27,7 +27,6 @@ export default class Uploader extends React.Component {
     uploadimageurl() {
         let testString = this.state.imageurl;
         let checkCORSpolicy = function(image) {
-            console.log(image);
             return new Promise(function(resolve, reject) {
                 const createCORSRequest = function(method, url) {
                     var xhr = new XMLHttpRequest();

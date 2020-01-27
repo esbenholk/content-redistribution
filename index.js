@@ -55,7 +55,6 @@ const uploader = multer({
 
 app.post("/uploadfile", uploader.single("file"), s3.upload, (req, res) => {
     const imageURL = `${s3Url}/${req.file.filename}`;
-    console.log("this is the image url address created with aws", imageURL);
     databaseActions
         .upload(imageURL)
         .then(result => {
@@ -68,7 +67,6 @@ app.post("/uploadfile", uploader.single("file"), s3.upload, (req, res) => {
         .catch(console.log("error: can not put file in database"));
 });
 app.post("/uploadimageurl", (req, res) => {
-    console.log("this is the image url uploaded manually", req.body.imageurl);
     databaseActions
         .upload(req.body.imageurl)
         .then(result => {
@@ -95,7 +93,6 @@ io.on("connection", function() {
     databaseActions
         .getImages()
         .then(result => {
-            console.log("have images from database", result.rows);
             io.sockets.emit("images_for_5thdimension", {
                 images: result.rows
             });
