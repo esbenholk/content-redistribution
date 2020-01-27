@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 8080;
 const PORT2 =
-    "localhost:8080" || "https://contentredistribution.herokuapp.com/";
+    "https://contentredistribution.herokuapp.com/" || "localhost:8080";
 const express = require("express");
 const app = express();
 const compression = require("compression");
