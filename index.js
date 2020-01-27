@@ -1,4 +1,5 @@
 const PORT = process.env.PORT || 8080;
+const PORT2 = "localhost:8080";
 const express = require("express");
 const app = express();
 const compression = require("compression");
@@ -9,7 +10,7 @@ const path = require("path");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
 const server = require("http").Server(app);
-const io = require("socket.io")(server, { origins: PORT });
+const io = require("socket.io")(server, { origins: PORT2 });
 
 app.use(compression());
 app.use(express.static("./public"));
