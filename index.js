@@ -105,9 +105,11 @@ io.on("connection", function(socket) {
     databaseActions
         .getImages()
         .then(result => {
-            io.sockets.emit("images_for_5thdimension", {
-                images: result.rows
-            });
+            io.sockets
+                .emit("images_for_5thdimension", {
+                    images: result.rows
+                })
+                .catch("unable to send to frontend");
         })
         .catch("error: unable to get imageurls from database");
     socket.on("disconnect", () => console.log("Client disconnected"));
