@@ -8,8 +8,6 @@ export default function App() {
         console.log("in redux state: state.image", state.image);
         return state && state.image;
     });
-    console.log("in app", images);
-    console.log("check");
     return (
         <div>
             <FifthDimension images={images} />
