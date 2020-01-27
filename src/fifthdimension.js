@@ -17,14 +17,19 @@ let start = true;
 let newscale = true;
 let drunk = false;
 let boxes = [];
+
 export default function FifthDimension(props) {
     const images = props.images;
 
     useEffect(() => {
-        if (start) {
-            document.addEventListener("click", function() {
-                controls.lock();
-            });
+        if (props.images) {
+            init();
+            animate();
+            if (start) {
+                document.addEventListener("click", function() {
+                    controls.lock();
+                });
+            }
         }
         document.addEventListener("keydown", onKeyDown);
         document.addEventListener("keyup", onKeyUp);
@@ -235,10 +240,6 @@ export default function FifthDimension(props) {
         renderer.render(scene, camera);
     };
 
-    if (props.images) {
-        init();
-        animate();
-    }
     const drunkAnimation = () => {
         if (drunk == false) {
             drunk = true;
