@@ -59,7 +59,7 @@ app.post("/uploadfile", uploader.single("file"), s3.upload, (req, res) => {
     databaseActions
         .upload(imageURL)
         .then(result => {
-            console.log("file put into database", result);
+            // console.log("file put into database", result);
             io.sockets.emit("new_imagefile_added", {
                 image: result.rows[0]
             });
@@ -71,7 +71,7 @@ app.post("/uploadimageurl", (req, res) => {
     databaseActions
         .upload(req.body.imageurl)
         .then(result => {
-            console.log("url put into database", result);
+            // console.log("url put into database", result);
             res.redirect("/");
         })
         .catch(console.log("error: can not put url in database"));
@@ -82,7 +82,7 @@ app.get("*", function(req, res) {
 });
 
 server.listen(PORT, function() {
-    console.log("I'm listening.");
+    console.log("I'm listening. server open");
 });
 
 process.on("uncaughtException", function(err) {
@@ -102,11 +102,9 @@ process.on("uncaughtException", function(err) {
 // });
 
 io.on("connection", function(socket) {
-    console.log("Client connected");
     databaseActions
         .getImages()
         .then(result => {
-            console.log("have images on server");
             io.sockets.emit("images_for_5thdimension", {
                 images: result.rows
             });

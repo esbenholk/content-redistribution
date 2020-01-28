@@ -20,7 +20,6 @@ let boxes = [];
 
 export default function FifthDimension(props) {
     const images = props.images;
-    console.log("logging images", images);
     useEffect(() => {
         if (start) {
             document.addEventListener("click", function() {
@@ -33,8 +32,6 @@ export default function FifthDimension(props) {
 
     useEffect(() => {
         const canvases = document.getElementsByTagName("canvas");
-        console.log("canvases", canvases);
-
         if (canvases.length > 1) {
             canvases[0].parentNode.removeChild(canvases[0]);
             // for (var i = 0; i < canvases.length; i++) {
@@ -90,7 +87,6 @@ export default function FifthDimension(props) {
     };
     const canvasReference = useRef();
     const init = () => {
-        console.log("init initilized");
         //set up textureloader for url texture placement
         const textureLoader = new THREE.TextureLoader();
         textureLoader.crossOrigin = "Anonymous";
@@ -168,7 +164,6 @@ export default function FifthDimension(props) {
         window.addEventListener("resize", onWindowResize, false);
     };
     const replace = () => {
-        console.log("new scale", newscale);
         if (newscale == true) {
             scene.fog = new THREE.Fog(0x261332, 100, 200);
             for (let i = 0; i < boxes.length; i++) {

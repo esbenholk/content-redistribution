@@ -9,8 +9,6 @@ export default function(state = {}, action) {
     }
     if (action.type == "newImage_for_imageArray_upload") {
         const images = [...state.image.images, action.image];
-        console.log(action.image);
-        console.log("the state", state.image);
         state = {
             ...state,
             image: { ...state.image, images }

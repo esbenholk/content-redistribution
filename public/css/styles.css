@@ -85,3 +85,9 @@ canvas {
     font-family: "Bebas Neue", cursive;
     font-size: 20px;
 }
+
+.musicplayer {
+    position: absolute;
+    bottom: 0;
+    visibility: hidden;
+}

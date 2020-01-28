@@ -16,7 +16,6 @@ export default class Uploader extends React.Component {
 
     componentDidMount() {}
     handleChange(e) {
-        console.log("file", e.target.files[0]);
         this.setState({ file: e.target.files[0] });
         button = this.uploadfile;
     }
@@ -58,9 +57,7 @@ export default class Uploader extends React.Component {
         if (testString.includes("http")) {
             checkCORSpolicy(this.state.imageurl)
                 .then(answer => {
-                    console.log(answer);
                     if (answer == true) {
-                        console.log("the url is valid");
                         axios
                             .post("/uploadimageurl", {
                                 imageurl: this.state.imageurl
@@ -89,14 +86,12 @@ export default class Uploader extends React.Component {
         }
     }
     uploadfile() {
-        console.log("uploading file");
         var fd = new FormData();
         fd.append("file", this.state.file);
         axios
             .post("/uploadfile", fd)
             .then(({ data }) => {
                 if (data.success) {
-                    console.log("data", data);
                     this.setState({
                         message_to_uploader: "u r cute"
                     });
@@ -107,7 +102,6 @@ export default class Uploader extends React.Component {
                 }
             })
             .catch(err => {
-                console.log("upload image didnt work", err);
                 this.setState({
                     error: true,
                     message_to_uploader:
