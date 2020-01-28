@@ -2,8 +2,15 @@ import React from "react";
 
 export default function Musicplayer() {
     return (
-        <div className="musicplayer">
+        <div className="information">
+            <p>
+                {" "}
+                use mouse and wasd to move <br></br>
+                presented by HOUSE OF KILLING feat Esben Holk <br></br>
+                with music by Sophie Harkins
+            </p>
             <iframe
+                className="musicplayer"
                 width="100%"
                 height="10"
                 scrolling="no"

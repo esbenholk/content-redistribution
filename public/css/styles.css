@@ -91,3 +91,17 @@ canvas {
     bottom: 0;
     visibility: hidden;
 }
+.information {
+    position: fixed;
+    bottom: 10px;
+    margin-bottom: 2px;
+    right: 0;
+    margin-right: 12px;
+    text-align: right;
+    font-size: 10px;
+    color: white;
+}
+.information p {
+    padding: 0;
+    margin: 0;
+}
