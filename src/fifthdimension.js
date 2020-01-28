@@ -165,7 +165,7 @@ export default function FifthDimension(props) {
     };
     const replace = () => {
         if (newscale == true) {
-            scene.fog = new THREE.Fog(0x261332, 100, 200);
+            scene.fog = new THREE.Fog(0x81c8f3, 100, 200);
             for (let i = 0; i < boxes.length; i++) {
                 boxes[i].position.y = Math.floor(Math.random() * 20 - 10) * 30;
                 boxes[i].position.x = Math.floor(Math.random() * 20 - 10) * 20;
