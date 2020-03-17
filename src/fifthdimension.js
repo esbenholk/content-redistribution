@@ -150,10 +150,12 @@ export default function FifthDimension(props) {
                 map: boxImage
             });
             let box = new THREE.Mesh(boxGeometry, boxMaterial);
-            box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
+            box.position.x =
+                Math.floor(Math.random() * 20 - 10) * images.images.length * 2;
             // box.position.y = Math.floor(Math.random() * 20) * 2;
             box.position.y = 20;
-            box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+            box.position.z =
+                Math.floor(Math.random() * 20 - 10) * images.images.length * 2;
             box.castShadow = true;
             boxes.push(box);
             scene.add(box);
