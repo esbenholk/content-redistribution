@@ -18,7 +18,7 @@
         "@babel/preset-env": "^7.8.3",
         "@babel/preset-react": "^7.8.3",
         "@testing-library/react": "^8.0.9",
-        "aws-sdk": "^2.610.0",
+        "aws-sdk": "^2.814.0",
         "axios": "^0.19.2",
         "babel-loader": "^8.0.5",
         "bcryptjs": "^2.4.3",
